@@ -74,6 +74,6 @@ stages:
               
               
             - script:  |
-               sudo cp   -r /home/azureuser/azagent/azagent/_work/1/  .
+               sudo cp   -r /home/azureuser/azagent/azagent/_work/1/  /home/azureuser/azagent/azagent/_work/1/s
                dotnet run
 
