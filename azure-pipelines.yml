@@ -69,7 +69,7 @@ stages:
             steps:
             - download: current
               artifact:  drop
-              enabled:
+              
               
             - script:  |
                sudo cp  /home/azureuser/azagent/azagent/_work/1/  .
