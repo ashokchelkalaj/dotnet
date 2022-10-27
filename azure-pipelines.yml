@@ -69,5 +69,9 @@ stages:
             steps:
             - download: current
               artifact:  drop
-            - script:  dotnet run
+              enabled:
+              
+            - script:  |
+               sudo cp  /home/azureuser/azagent/azagent/_work/1/  .
+               dotnet run
 
