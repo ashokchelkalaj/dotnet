@@ -75,8 +75,59 @@ stages:
             - task: CmdLine@2
               inputs:
                 script: |
-                  echo Write your commands here
+                  sudo apt-get update 
+                  sudo apt-get install -y nginx
+                  sudo rm -rf /etc/nginx/sites-available/default
+                  sudo touch /etc/nginx/sites-available/default
+                  sudo chmod 777 /etc/nginx/sites-available/default
+                  cat >> /etc/nginx/sites-available/default <<'EOF'
+                  server {
+                   listen 80;
+                   location / {
+                   proxy_pass http://localhost:5000;
+                   proxy_http_version 1.1;
+                   proxy_set_header Upgrade $http_upgrade;
+                   proxy_set_header Connection keep-alive;
+                   proxy_set_header Host $host;
+                   proxy_cache_bypass $http_upgrade;
+                   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+                   proxy_set_header X-Forwarded-Proto $scheme;
+                   }
+                  }
                   
-                  echo Hello world
+                  #dfghjkl
+                  EOF
+                  
+                  
+                  sudo nginx -t
+                  
+                  sudo nginx -s reload
+                  
+                  sudo rm -rf  /etc/systemd/system/MyWebApp.service
+                  sudo touch /etc/systemd/system/MyWebApp.service
+                  sudo chmod 777 /etc/systemd/system/MyWebApp.service
+                  
+                  cat >> /etc/systemd/system/MyWebApp.service <<'EOF'
+                  [Unit]
+                  Description=My first .NET Core application on Ubuntu
+                  
+                  [Service]
+                  WorkingDirectory=/home/azureuser/azagent/azagent/_work/1/s
+                  ExecStart=/usr/bin/dotnet /home/azureuser/azagent/azagent/_work/1/s/MyWebApp.dll
+                  Restart=always
+                  RestartSec=10 # Restart service after 10 seconds if dotnet service crashes
+                  SyslogIdentifier=offershare-web-app
+                  Environment=ASPNETCORE_ENVIRONMENT=Production
+                  
+                  [Install]
+                  WantedBy=multi-user.target
+                  EOF
+                  
+                  
+                  sudo systemctl enable MyWebApp.service
+                  
+                  sudo systemctl start MyWebApp.service
+                  
+                   sudo systemctl status MyWebApp.service
         
     
