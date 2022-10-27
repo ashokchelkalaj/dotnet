@@ -72,11 +72,11 @@ stages:
            
               artifact:  drop
             -  script: |
-
-    
-        steps:
-         
-        - task: CmdLine@2
-          inputs:
-            script: 'echo "hello"'
+            - task: CmdLine@2
+              inputs:
+                script: |
+                  echo Write your commands here
+                  
+                  echo Hello world
+        
     
