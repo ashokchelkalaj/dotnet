@@ -60,10 +60,14 @@ stages:
     jobs:
     - deployment: DeployWebsite
       displayName: 'Deploy website'
-      environment: 'lin'
+      environment: 
+       name: lin
+       resourceType: VirtualMachine
       strategy:
        runOnce:
            deploy:
             steps:
+            - download: current
+              artifact:  drop
             - script:  dotnet run
 
