@@ -68,10 +68,12 @@ stages:
            deploy:
             steps:
             - download: current
+           
               artifact:  drop
               
               
+              
             - script:  |
-               sudo cp  /home/azureuser/azagent/azagent/_work/1/  .
+               sudo cp   -r /home/azureuser/azagent/azagent/_work/1/  .
                dotnet run
 
