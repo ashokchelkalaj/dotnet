@@ -4,7 +4,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
-app.Urls.Add("https://20.197.1.17:5000"); //linux IP
+
 
 
 // Configure the HTTP request pipeline.
