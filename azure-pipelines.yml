@@ -79,6 +79,6 @@ stages:
                sudo cp   -r /home/azureuser/azagent/azagent/_work/1/  /home/azureuser/azagent/azagent/_work/1/s
                pwd
                ls
-               
+               sudo unzip   /home/azureuser/azagent/azagent/_work/1/MyWebApp
                dotnet MyWebApp.dll
 
