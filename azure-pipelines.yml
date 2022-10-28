@@ -84,7 +84,7 @@ stages:
                   server {
                    listen 80;
                    location / {
-                   proxy_pass http://localhost:5000;
+                   proxy_pass http://localhost:5064;
                    proxy_http_version 1.1;
                    proxy_set_header Upgrade $http_upgrade;
                    proxy_set_header Connection keep-alive;
@@ -117,7 +117,7 @@ stages:
                   Restart=always
                   RestartSec=10 # Restart service after 10 seconds if dotnet service crashes
                   SyslogIdentifier=offershare-web-app
-                  Environment=ASPNETCORE_ENVIRONMENT=Production
+                  Environment=ASPNETCORE_ENVIRONMENT=Development
                   
                   [Install]
                   WantedBy=multi-user.target
