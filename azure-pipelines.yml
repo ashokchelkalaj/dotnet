@@ -78,8 +78,7 @@ stages:
                 WebsiteName: 'MYWEBAPP'
                 WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot'
                 WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
-                AddBinding: true
-                Bindings: 'http/All Unassigned:80:'
+ 
             - task: IISWebAppDeploymentOnMachineGroup@0
               inputs:
                 WebSiteName: 'MYWEBAPP'
