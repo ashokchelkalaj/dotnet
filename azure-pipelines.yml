@@ -68,8 +68,7 @@ stages:
          runOnce:
            deploy:
             steps:
-            - download: 
-           
+            - download: $(System.ArtifactsDirectory)
               artifact:  drop
             -  script: |
             - task: CmdLine@2
