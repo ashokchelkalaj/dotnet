@@ -78,7 +78,34 @@ stages:
                 WebsiteName: 'MYWEBAPP'
                 WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot'
                 WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
- 
+                AddBinding: true
+                Bindings: |
+                    {
+                                        "bindings":[{
+                                            "protocol":"http",
+                                            "ipAddress":"*",
+                                            "port":"xxxxx",
+                                            "sslThumbprint":"",
+                                            "sniFlag":false
+                                        },
+                                        {
+                                            "protocol":"http",
+                                            "ipAddress":"*",
+                                            
+                                            "port":"5000",
+                                            "sslThumbprint":"",
+                                            "sniFlag":false
+                                        },
+                                        {
+                                            "protocol":"http",
+                                            "ipAddress":"*",
+                                            
+                                            "port":"5000",
+                                            "sslThumbprint":"",
+                                            "sniFlag":false
+                                        }
+                                    ]
+                                } 
             - task: IISWebAppDeploymentOnMachineGroup@0
               inputs:
                 WebSiteName: 'MYWEBAPP'
