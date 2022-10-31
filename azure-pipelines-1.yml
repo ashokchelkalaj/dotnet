@@ -1,0 +1,85 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+trigger:
+ branches:
+   include:
+     - main
+stages:
+  - stage: Build_stage
+    displayName: Build
+    jobs:
+      - job:
+        displayName: web app
+        pool:
+          vmImage: windows-latest
+        variables:
+          BuildConfiguration: Release
+        steps:
+        - task: DotNetCoreCLI@2
+          displayName: restore
+          inputs:
+            command: 'restore'
+            projects: '**/*.csproj'
+            feedsToUse: 'select'
+            
+        - task: DotNetCoreCLI@2
+          displayName: build
+          inputs:
+            command: 'build'
+            projects: '**/*.csproj'
+            arguments: '--configuration $(BuildConfiguration)'
+          
+        - task: DotNetCoreCLI@2
+          displayName: publish
+          inputs:
+            command: 'publish'
+            publishWebProjects: true
+            arguments: '--configuration $(BuildConfiguration) --output $(build.artifactstagingdirectory)'
+            zipAfterPublish: true
+          
+        - task: PublishBuildArtifacts@1
+          displayName: PublishBuildArtifacts
+          inputs:
+            PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+            ArtifactName: 'drop'
+            publishLocation: Container
+
+       
+  - stage: DeployWebsite
+    displayName: 'Deploy website'
+  
+    
+    jobs:
+      - job: 
+      - deployment: DeployWebsite
+        displayName: 'Deploy website'
+        environment: 
+         name: windows
+         resourceType: VirtualMachine
+        strategy:
+         runOnce:
+           deploy:
+            steps:
+            - download: current
+              artifact:  drop
+            
+            - task: IISWebAppManagementOnMachineGroup@0
+              inputs:
+                IISDeploymentType: 'IISWebsite'
+                ActionIISWebsite: 'StartWebsite'
+                StartStopWebsiteName: 'MyWEBAPP'
+            - task: IISWebAppDeploymentOnMachineGroup@0
+              inputs:
+                WebSiteName: 'MYWEBAPP'
+                Package: '$(System.DefaultWorkingDirectory)\**\*.zip'
+                TakeAppOfflineFlag: true
+            - task: IISWebAppManagementOnMachineGroup@0
+              inputs:
+                IISDeploymentType: 'IISWebsite'
+                ActionIISWebsite: 'StartWebsite'
+                StartStopWebsiteName: 'MYWEBAPP'
+
+
