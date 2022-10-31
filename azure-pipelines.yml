@@ -86,6 +86,11 @@ stages:
                 TakeAppOfflineFlag: True
                 XmlVariableSubstitution: True
 
-           
+            - task: IISWebAppManagementOnMachineGroup@0
+              displayName: 'Manage IISWebsite'
+              inputs:
+                ActionIISWebsite: StartWebsite
+                StartStopWebsiteName: MYWEBAPP
+
 
             
