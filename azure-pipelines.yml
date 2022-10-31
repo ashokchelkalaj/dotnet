@@ -68,7 +68,7 @@ stages:
          runOnce:
            deploy:
             steps:
-            - download: current
+            - download: 
            
               artifact:  drop
             -  script: |
