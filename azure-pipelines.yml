@@ -65,6 +65,12 @@ stages:
             steps:
             - download: current
               artifact:  drop
+           
+            - task: rbosma.InstallNetCoreRuntimeAndHosting.InstallNetCoreRuntimeAndHosting.InstallNetCoreRuntimeAndHosting@1
+              displayName: 'Install .NET Core Runtime & Hosting Version 6.0'
+              inputs:
+                version: 6.0
+
             - task: IISWebAppManagementOnMachineGroup@0
               inputs:
                 IISDeploymentType: 'IISWebsite'
@@ -72,12 +78,19 @@ stages:
                 WebsiteName: 'MYWEBAPP'
                 WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot'
                 WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
+                AddBinding: true
+                Bindings: 'http/All Unassigned:80:'
             - task: IISWebAppDeploymentOnMachineGroup@0
               inputs:
                 WebSiteName: 'MYWEBAPP'
                 Package: \azagent\A2\_work\1\
+                TakeAppOfflineFlag: True
+                XmlVariableSubstitution: True
+
             - task: IISWebAppManagementOnMachineGroup@0
               inputs:
                 IISDeploymentType: 'IISWebsite'
                 ActionIISWebsite: 'StartWebsite'
                 StartStopWebsiteName: 'MYWEBAPP'
+
+            
