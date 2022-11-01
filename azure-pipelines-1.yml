@@ -6,7 +6,12 @@
 trigger:
  branches:
    include:
-     - main
+     - windows
+variables:
+  buildConfiguration: 'Release'
+  projectName: 'MyWebApp'
+  websiteName: 'MyWebApp'
+  appPoolName: 'MyWebApp'
 stages:
   - stage: Build_stage
     displayName: Build
@@ -46,64 +51,58 @@ stages:
             PathtoPublish: '$(Build.ArtifactStagingDirectory)'
             ArtifactName: 'drop'
             publishLocation: Container
-        
-       
-  - stage: DeployWebsite
-    displayName: 'Deploy website'
-  
-    
-    jobs:
-      - job: 
-      - deployment: DeployWebsite
-        displayName: 'Deploy website'
-        environment: 
-         name: win
-         resourceType: VirtualMachine
-        strategy:
-         runOnce:
-           deploy:
-            steps:
-            - download: current
-              artifact:  drop
-           
-            - task: rbosma.InstallNetCoreRuntimeAndHosting.InstallNetCoreRuntimeAndHosting.InstallNetCoreRuntimeAndHosting@1
-              displayName: 'Install .NET Core Runtime & Hosting Version 6.0'
-              inputs:
-                version: 6.0
 
+  
+  - stage: 
+    displayName: 'Dev'
+    dependsOn: 'Build_stage'
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/windows'))
+    jobs:
+     - deployment: Dev
+       displayName: Dev
+       environment: 
+         name: 'win'    
+         resourceType: VirtualMachine
+       variables:
+       - name: websitePhysicalPath
+         value: '%SystemDrive%\inetpub\wwwroot\$(websiteName)'
+
+       strategy:
+        runOnce:
+          deploy:
+            steps: 
+         
+         
+        
+         
             - task: IISWebAppManagementOnMachineGroup@0
-              inputs:
+              inputs:            
                 IISDeploymentType: 'IISWebsite'
                 ActionIISWebsite: 'CreateOrUpdateWebsite'
-                WebsiteName: 'MYWEBAPP'
-                WebsitePhysicalPath: '%SystemDrive%\inetpub\wwwroot'
+                WebsiteName: '$(websiteName)'
+                WebsitePhysicalPath: '$(websitePhysicalPath)'
                 WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
+                CreateOrUpdateAppPoolForWebsite: true
+                AppPoolNameForWebsite: '$(appPoolName)'
+                DotNetVersionForWebsite: 'No Managed Code'
+                PipeLineModeForWebsite: 'Integrated'
+                AppPoolIdentityForWebsite: 'ApplicationPoolIdentity'
                 AddBinding: true
                 Bindings: |
-                      {
+                  {
                       bindings:[
                           {
                               "protocol":"http",
-                              "ipAddress":"",
+                              "ipAddress":"*",
                               "hostname":"",
-                              "port":"80",
+                              "port":"90",
                               "sslThumbprint":"",
                               "sniFlag":false
                           }
                       ]
-                      }
+                  }
+
             - task: IISWebAppDeploymentOnMachineGroup@0
               inputs:
-                WebSiteName: 'MYWEBAPP'
-                Package: \azagent\A2\_work\1\
-                TakeAppOfflineFlag: True
-                XmlVariableSubstitution: True
-
-            - task: IISWebAppManagementOnMachineGroup@0
-              displayName: 'Manage IISWebsite'
-              inputs:
-                ActionIISWebsite: StartWebsite
-                StartStopWebsiteName: MYWEBAPP
-
-
-            
+                WebSiteName: '$(websiteName)'
+                Package: \azagent\A1\_work\2\
