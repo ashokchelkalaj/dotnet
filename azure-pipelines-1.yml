@@ -61,7 +61,7 @@ stages:
      - deployment: Dev
        displayName: Dev
        environment: 
-         name: 'win'    
+         name: 'window123'    
          resourceType: VirtualMachine
        variables:
        - name: websitePhysicalPath
@@ -95,14 +95,19 @@ stages:
                               "protocol":"http",
                               "ipAddress":"*",
                               "hostname":"",
-                              "port":"90",
+                              "port":"9090",
                               "sslThumbprint":"",
                               "sniFlag":false
                           }
                       ]
                   }
 
+            # - task: IISWebAppDeploymentOnMachineGroup@0
+            #   inputs:
+            #     WebSiteName: '$(websiteName)'
+            #     Package: \azagent\A1\_work\2\
+            
             - task: IISWebAppDeploymentOnMachineGroup@0
               inputs:
                 WebSiteName: '$(websiteName)'
-                Package: \azagent\A1\_work\2\
+                Package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/$(projectName).zip'
