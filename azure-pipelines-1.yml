@@ -102,12 +102,16 @@ stages:
                       ]
                   }
 
-            - task: IISWebAppDeploymentOnMachineGroup@0
-              inputs:
-                WebSiteName: '$(websiteName)'
-                Package: \azagent\A1\_work\2\
+            # - task: IISWebAppDeploymentOnMachineGroup@0
+            #   inputs:
+            #     WebSiteName: '$(websitName)'
+            #     Package: \azagent\A1\_work\2\
             
             # - task: IISWebAppDeploymentOnMachineGroup@0
             #   inputs:
             #     WebSiteName: '$(websiteName)'
             #     Package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/$(projectName).zip'
+            - task: IISWebAppDeploymentOnMachineGroup@0
+              inputs:
+                WebSiteName: '$(websitName)'
+                Package: '$(System.DefaultWorkingDirectory)\**\*.zip'
