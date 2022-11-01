@@ -55,7 +55,7 @@ stages:
   
   - stage: 
     displayName: 'Dev'
-    dependsOn: 'Build'
+    dependsOn: 'Build_stage'
     condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/windows'))
     jobs:
      - deployment: Dev
