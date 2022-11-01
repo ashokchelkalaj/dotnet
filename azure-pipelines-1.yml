@@ -113,5 +113,5 @@ stages:
             #     Package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/$(projectName).zip'
             - task: IISWebAppDeploymentOnMachineGroup@0
               inputs:
-                WebSiteName: '$(websitName)'
+                WebSiteName: '$(websiteName)'
                 Package: '$(Pipeline.Workspace)/drop/**/*.zip'
