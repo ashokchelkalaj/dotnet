@@ -52,42 +52,43 @@ stages:
             ArtifactName: 'drop'
             publishLocation: Container
 
-- stage: 'Dev'
-  displayName: 'Dev'
-  dependsOn: 'Build'
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
-  jobs:
-   - deployment: Dev
-     displayName: Dev
-     environment: 
-       name: 'win'    
-       resourceType: VirtualMachine
-     variables:
-     - name: websitePhysicalPath
-       value: '%SystemDrive%\inetpub\wwwroot\$(websiteName)'
+  
+  - stage: 
+    displayName: 'Dev'
+    dependsOn: 'Build'
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
+    jobs:
+     - deployment: Dev
+       displayName: Dev
+       environment: 
+         name: 'win'    
+         resourceType: VirtualMachine
+       variables:
+       - name: websitePhysicalPath
+         value: '%SystemDrive%\inetpub\wwwroot\$(websiteName)'
 
-     strategy:
-      runOnce:
-        deploy:
-          steps: 
+       strategy:
+        runOnce:
+          deploy:
+            steps: 
          
          
         
          
-          - task: IISWebAppManagementOnMachineGroup@0
-            inputs:            
-              IISDeploymentType: 'IISWebsite'
-              ActionIISWebsite: 'CreateOrUpdateWebsite'
-              WebsiteName: '$(websiteName)'
-              WebsitePhysicalPath: '$(websitePhysicalPath)'
-              WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
-              CreateOrUpdateAppPoolForWebsite: true
-              AppPoolNameForWebsite: '$(appPoolName)'
-              DotNetVersionForWebsite: 'No Managed Code'
-              PipeLineModeForWebsite: 'Integrated'
-              AppPoolIdentityForWebsite: 'ApplicationPoolIdentity'
-              AddBinding: true
-              Bindings: |
+            - task: IISWebAppManagementOnMachineGroup@0
+              inputs:            
+                IISDeploymentType: 'IISWebsite'
+                ActionIISWebsite: 'CreateOrUpdateWebsite'
+                WebsiteName: '$(websiteName)'
+                WebsitePhysicalPath: '$(websitePhysicalPath)'
+                WebsitePhysicalPathAuth: 'WebsiteUserPassThrough'
+                CreateOrUpdateAppPoolForWebsite: true
+                AppPoolNameForWebsite: '$(appPoolName)'
+                DotNetVersionForWebsite: 'No Managed Code'
+                PipeLineModeForWebsite: 'Integrated'
+                AppPoolIdentityForWebsite: 'ApplicationPoolIdentity'
+                AddBinding: true
+                Bindings: |
                   {
                       bindings:[
                           {
@@ -101,7 +102,7 @@ stages:
                       ]
                   }
 
-          - task: IISWebAppDeploymentOnMachineGroup@0
-            inputs:
-              WebSiteName: '$(websiteName)'
-              Package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/$(projectName).zip'
+            - task: IISWebAppDeploymentOnMachineGroup@0
+              inputs:
+                WebSiteName: '$(websiteName)'
+                Package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/$(projectName).zip'
