@@ -57,7 +57,7 @@ stages:
       - deployment: DeployWebsite
         displayName: 'Deploy website'
         environment: 
-         name: windows
+         name: win
          resourceType: VirtualMachine
         strategy:
          runOnce:
