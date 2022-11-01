@@ -93,7 +93,7 @@ stages:
                       bindings:[
                           {
                               "protocol":"http",
-                              "ipAddress":"",
+                              "ipAddress":"*",
                               "hostname":"",
                               "port":"90",
                               "sslThumbprint":"",
