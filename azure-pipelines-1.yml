@@ -105,4 +105,4 @@ stages:
             - task: IISWebAppDeploymentOnMachineGroup@0
               inputs:
                 WebSiteName: '$(websiteName)'
-                Package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/$(projectName).zip'
+                Package: \azagent\A1\_work\2\
