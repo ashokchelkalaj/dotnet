@@ -121,4 +121,4 @@ stages:
                   WebSiteName: '$(WebsiteName)'
                   TakeAppOfflineFlag: True
                   XmlVariableSubstitution: True
-                  Package: $(System.DefaultWorkingDirectory)\**\*.zip
+                  Package: \azagent\A1\_work\2\**\*.zip
