@@ -121,4 +121,4 @@ stages:
                   WebSiteName: '$(WebsiteName)'
                   TakeAppOfflineFlag: True
                   XmlVariableSubstitution: True
-                  Package: \azagent\A1\_work\2\**\*.zip
+                  Package: \azagent\A1\_work\3\**\*.zip
