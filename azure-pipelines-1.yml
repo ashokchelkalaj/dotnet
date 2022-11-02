@@ -65,7 +65,7 @@ stages:
          resourceType: VirtualMachine
        variables:
        - name: websitePhysicalPath
-         value: '%SystemDrive%\inetpub\wwwroot\$(websiteName)'
+         value: '%SystemDrive%\inetpub\wwwroot'
 
        strategy:
         runOnce:
@@ -111,7 +111,13 @@ stages:
             #   inputs:
             #     WebSiteName: '$(websiteName)'
             #     Package: '$(Pipeline.Workspace)/drop/$(buildConfiguration)/$(projectName).zip'
+            # - task: IISWebAppDeploymentOnMachineGroup@0
+            #   inputs:
+            #     WebSiteName: '$(websiteName)'
+            #     Package: '$(Pipeline.Workspace)/drop/**/*.zip'
             - task: IISWebAppDeploymentOnMachineGroup@0
+              displayName: 'IIS Web App Deploy'
               inputs:
-                WebSiteName: '$(websiteName)'
-                Package: '$(Pipeline.Workspace)/drop/**/*.zip'
+                  WebSiteName: '$(WebsiteName)'
+                  TakeAppOfflineFlag: True
+                  XmlVariableSubstitution: True
