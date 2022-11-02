@@ -121,3 +121,4 @@ stages:
                   WebSiteName: '$(WebsiteName)'
                   TakeAppOfflineFlag: True
                   XmlVariableSubstitution: True
+                  Package: $(System.DefaultWorkingDirectory)\**\*.zip
