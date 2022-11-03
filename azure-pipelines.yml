@@ -109,7 +109,8 @@ stages:
                   Description=My first .NET Core application on Ubuntu
                   
                   [Service]
-                  WorkingDirectory=/home/azureuser/azagent/azagent/_work/1/drop
+                  WorkingDirectory= /home/azureuser/azagent/_work/1/drop/
+
                   ExecStart=/usr/bin/dotnet /home/azureuser/azagent/_work/1/drop/MyWebApp.dll
                   Restart=always
                   RestartSec=10 # Restart service after 10 seconds if dotnet service crashes
