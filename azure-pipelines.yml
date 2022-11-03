@@ -66,12 +66,7 @@ stages:
             - download: current
               artifact:  drop
             -  script: |
-            - task: InstallNetCoreRuntimeAndHosting@1
-              inputs:
-                version: '6.0'
-                useProxy: false
-                norestart: false
-                iisReset: false
+         
             - task: CmdLine@2
               inputs:
                 script: |
