@@ -14,7 +14,7 @@ stages:
       - job:
         displayName: web app
         pool:
-          vmImage: windows-latest
+          vmImage: ubuntu-latest
         variables:
           BuildConfiguration: Release
         steps:
