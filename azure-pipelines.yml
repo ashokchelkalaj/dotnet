@@ -50,7 +50,8 @@ stages:
        
   - stage: DeployWebsite
     displayName: 'Deploy website'
-  
+    dependsOn: 'Build_stage'
+    condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/main'))
     
     jobs:
       - job: 
