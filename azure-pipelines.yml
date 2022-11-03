@@ -125,7 +125,7 @@ stages:
                   
                   sudo systemctl enable MyWebApp.service
                   
-                  sudo systemctl start MyWebApp.service
+                  sudo systemctl restart MyWebApp.service
                   
                    sudo systemctl status MyWebApp.service
         
